@@ -16,24 +16,21 @@ class TrainXgModel(d6t.tasks.TaskPickle):
         shots = self.inputLoad()
 
         # select features
-        feature_cols = ['angle', 'distance', 'distance2', 'angle2', 'dist_angle','prev_action','bodypart_name','type_name']
+        feature_cols = ['angle', 'distance', 'distance2', 'angle2', 'dist_angle']
         X = shots[feature_cols]
-        y = shots['result']
+        cat_vars = ['prev_action', 'bodypart_name', 'type_name']
+        X = pd.concat([X, pd.get_dummies(shots[cat_vars])], axis=1)
+        y = shots['goal']
 
+        # Create a logistic regression model and fit it to the training data
+        lr_model = LogisticRegression(max_iter=500)
+        lr_model.fit(X, y)
 
+        # Evaluate the model on the test data
+        train_acc = lr_model.score(X, y)
+        print("Accuracy on train set: {:.2f}%".format(train_acc * 100))
 
-        # split train and test data
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+        coef_df = pd.DataFrame({'feature': X.columns, 'coeficientes': lr_model.coef_[0]})
+        print(coef_df)
 
-        # train model
-        model = LogisticRegression()
-        model.fit(X_train, y_train)
-
-        # predict test data
-        y_pred = model.predict(X_test)
-
-        # evaluate model
-        accuracy = accuracy_score(y_test, y_pred)
-        print('Accuracy: {:.2f}'.format(accuracy))
-
-        self.save(model)
+        self.save(lr_model)
