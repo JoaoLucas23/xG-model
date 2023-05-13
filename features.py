@@ -33,5 +33,7 @@ class GetFeatures(d6t.tasks.TaskCSVPandas):
         shots['dist_angle'] = shots['distance'] * shots['angle']
         # get previous event
         shots['prev_action'] = shots['original_action_id'].apply(lambda x: actions.at[x - 1, 'type_name'])
+        # get goal or not
+        shots['goal'] = shots['result_name'].apply(lambda r: 1 if r == 'success' else 0)
 
         self.save(shots)
