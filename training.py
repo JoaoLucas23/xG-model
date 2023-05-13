@@ -8,12 +8,23 @@ from sklearn.metrics import accuracy_score
 
 from features import GetFeatures
 
+
 class TrainXgModel(d6t.tasks.TaskPickle):
+    train_comps = d6t.ListParameter()
+
     def requires(self):
-        return GetFeatures()
+        reqs = {'features': {}}
+
+        for competition in tqdm(self.train_comps, desc='Getting features'):
+            reqs['features'][competition] = GetFeatures(competition=competition)
+
+        return reqs
 
     def run(self):
-        shots = self.inputLoad()
+        shots = []
+        for comp in tqdm(self.train_comps, desc='Loading features'):
+            shots.append(self.input()['features'][comp].load())
+        shots = pd.concat(shots).reset_index(drop=True)
 
         # select features
         feature_cols = ['angle', 'distance', 'distance2', 'angle2', 'dist_angle']

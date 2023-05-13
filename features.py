@@ -7,9 +7,10 @@ from loader import LoadWyscoutToSPADL
 
 
 class GetFeatures(d6t.tasks.TaskCSVPandas):
+    competition = d6t.Parameter()
 
     def requires(self):
-        return LoadWyscoutToSPADL()
+        return LoadWyscoutToSPADL(competition=self.competition)
 
     def run(self):
         actions = self.inputLoad()

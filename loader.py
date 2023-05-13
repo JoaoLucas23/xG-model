@@ -9,11 +9,12 @@ DATA_DIR = "H:/Documentos/SaLab/Soccermatics/Wyscout Data"
 
 
 class LoadWyscoutToSPADL(d6t.tasks.TaskCSVPandas):
+    competition = d6t.Parameter()
 
     def run(self):
         WYL = PublicWyscoutLoader(root=DATA_DIR)
         competitions = WYL.competitions()
-        selected_competitions = competitions[competitions.competition_name == self.competition_name]
+        selected_competitions = competitions[competitions.competition_name == self.competition]
         games = pd.concat([
             WYL.games(row.competition_id, row.season_id)
             for row in selected_competitions.itertuples()
@@ -21,7 +22,7 @@ class LoadWyscoutToSPADL(d6t.tasks.TaskCSVPandas):
 
         games_verbose = list(games.itertuples())
         actions = []
-        for game in tqdm(games_verbose, desc="Converting to SPADL ({} games)".format(len(games_verbose)),
+        for game in tqdm(games_verbose, desc="Converting "+self.competition+" to SPADL ({} games)".format(len(games_verbose)),
                          total=len(games_verbose)):
             events = WYL.events(game.game_id)
             events = events.rename(columns={'id': 'event_id', 'eventId': 'type_id', 'subEventId': 'subtype_id',
