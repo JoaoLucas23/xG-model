@@ -73,7 +73,7 @@ To test the model, all shots and freekick shots in the English and Spanish Leagu
 
 
 ### Test Data
-|player_name|total shots|xg|goal|minutes_played|xg_per_90|xg_per_shot|goal_per_90|goal_per_shot|
+|player_name|total shots|xg|goal|minutes_played|xg_per_90|goal_per_90|xg_per_shot|goal_per_shot|
 |---|---|---|---|---|---|---|---|---|
 |Cristiano Ronaldo|170|26.33|26|2355|1.01|0.99|0.15|0.15|
 |H. Kane|175|25.52|29|3201|0.72|0.82|0.15|0.17|
