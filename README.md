@@ -1,12 +1,12 @@
-## xG-model
+# xG-model
 
-### Description
+## Description
 
 This is a model to predict the expected goals of a shot in a soccer game. This model uses Logistic Regression to predict the expected goals of a shot. The model uses Wyscout open data to train and test the model. In this model, only freekick shots and regular shots were considered to train. To consider penalties, the percentage of penalties taken that resulted in a goal was calculated and set as the xg value of a penalty shot. This value varies from league to league, being 0.7168 in the Spanish League and 0.7 in the English League.
 
-### Model
+## Model
 
-Logistic Regression
+###Logistic Regression
 
 The Logistic Regression model is a classification model that uses the logistic function to predict the probability of a binary outcome. In this case, the binary outcome is whether the shot resulted in a goal or not. This was the best choice for this model because it is a simple model and the results are easy to interpret. The model had an accuracy of 89.92% in the train data and 89.58% in the test data.
 
@@ -21,17 +21,17 @@ The Logistic Regression model is a classification model that uses the logistic f
 - Previous event
 - Shot result
 
-### Data
+## Data
 
-#### Train Data
+### Train Data
 
 To train the model, all shots and freekick shots in the Italian, French and German League on the 17/18 season were used. This train data resulted in 25266 total shots.
 
-#### Test Data
+### Test Data
 
 To test the model, all shots and freekick shots in the English and Spanish League on the 17/18 season were used. This test data resulted in 17233 total shots. Additionally, penalty shots with the fixed xg value mentioned before were added.
 
-### Files
+## Files
 
 - loader.py: loads the event data from the local directory and transforms to the SPADL format
 - features.py: calculates and gets the features of the shots
