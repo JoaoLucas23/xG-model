@@ -23,6 +23,9 @@ class PredictXg(d6tflow.tasks.TaskCSVPandas):
         X = shots[feature_cols]
         cat_vars = ['prev_action', 'bodypart_name', 'type_name']
         X = pd.concat([X, pd.get_dummies(shots[cat_vars])], axis=1)
+        if self.competition == 'Spanish first division':
+            X = X.drop('prev_action_shot_penalty', axis=1)
+            #X = X.drop('type_name_shot_penalty', axis=1)
 
         shots['xg'] = model.predict_proba(X)[:, 1]
 

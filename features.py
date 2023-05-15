@@ -14,7 +14,7 @@ class GetFeatures(d6t.tasks.TaskCSVPandas):
 
     def run(self):
         actions = self.inputLoad()
-        shots_mask = ['shot_freekick', 'shot_penalty', 'shot']
+        shots_mask = ['shot_freekick', 'shot']
 
         shots = actions.loc[actions['type_name'].isin(shots_mask)].reset_index(drop=False)
         shots = shots.rename(columns={'index': 'original_action_id'})
@@ -38,3 +38,25 @@ class GetFeatures(d6t.tasks.TaskCSVPandas):
         shots['goal'] = shots['result_name'].apply(lambda r: 1 if r == 'success' else 0)
 
         self.save(shots)
+
+
+class PenaltyFeatures(d6t.tasks.TaskCSVPandas):
+        competition = d6t.Parameter()
+
+        def requires(self):
+            return LoadWyscoutToSPADL(competition=self.competition)
+        
+        def run(self):
+            actions = self.inputLoad()
+            shots_mask = ['shot_penalty']
+
+            penalties = actions.loc[actions['type_name'].isin(shots_mask)].reset_index(drop=False)
+            penalties = penalties.rename(columns={'index': 'original_action_id'})
+            penalties['goal'] = penalties['result_name'].apply(lambda r: 1 if r == 'success' else 0)
+            penalties_taken = len(penalties)
+            penalty_goals = len(penalties.loc[penalties.goal==1])
+            xg = penalty_goals / penalties_taken
+            penalties['xg'] = xg
+            
+            self.save(penalties)
+            
