@@ -6,7 +6,7 @@ This is a model to predict the expected goals of a shot in a soccer game. This m
 
 ## Model
 
-###Logistic Regression
+### Logistic Regression
 
 The Logistic Regression model is a classification model that uses the logistic function to predict the probability of a binary outcome. In this case, the binary outcome is whether the shot resulted in a goal or not. This was the best choice for this model because it is a simple model and the results are easy to interpret. The model had an accuracy of 89.92% in the train data and 89.58% in the test data.
 
