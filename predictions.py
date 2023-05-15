@@ -28,5 +28,7 @@ class PredictXg(d6tflow.tasks.TaskCSVPandas):
             #X = X.drop('type_name_shot_penalty', axis=1)
 
         shots['xg'] = model.predict_proba(X)[:, 1]
+        train_acc = model.score(X, shots['goal'])
+        print("Accuracy on train set: {:.2f}%".format(train_acc * 100))
 
         self.save(shots)

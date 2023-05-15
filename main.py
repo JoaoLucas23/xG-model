@@ -6,6 +6,7 @@ from predictions import PredictXg
 from wyDataLoader import wyLoadData
 from wyDataLoader import wyLoadTimePlayed
 from features import PenaltyFeatures
+from features import GetFeatures
 
 DATA_DIR = "H:/Documentos/SaLab/Soccermatics/Wyscout Data"
 
