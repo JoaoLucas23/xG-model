@@ -1,39 +1,45 @@
-# xG-model
+## xG-model
 
-## Description
-This is a model to predict the expected goals of a shot in a soccer game. This model uses Logistic Regression to predict the expected goals of a shot 
-The model uses [Wyscout](https://wyscout.com/) open data to train and test the model. 
-In this model, i considered only freekick shots and regular shots to train. To consider penalties, i calculated the % of penalties taken that resulted in a goal and setted as the xg value of a penalty shot. This value varies from league to league, being 0.7168 in the Spanish League and 0.7 in the English League.
-## Model
-### Logistic Regression
-The Logistic Regression model is a classification model that uses the logistic function to predict the probability of a binary outcome. In this case, the binary outcome is if the shot resulted in a goal or not.
-This was the best choice for this model because it is a simple model and it is easy to interpret the results.
-I had an accuracy of 89.92% in the train data and 89.58% in the test data.
+### Description
+
+This is a model to predict the expected goals of a shot in a soccer game. This model uses Logistic Regression to predict the expected goals of a shot. The model uses Wyscout open data to train and test the model. In this model, only freekick shots and regular shots were considered to train. To consider penalties, the percentage of penalties taken that resulted in a goal was calculated and set as the xg value of a penalty shot. This value varies from league to league, being 0.7168 in the Spanish League and 0.7 in the English League.
+
+### Model
+
+Logistic Regression
+
+The Logistic Regression model is a classification model that uses the logistic function to predict the probability of a binary outcome. In this case, the binary outcome is whether the shot resulted in a goal or not. This was the best choice for this model because it is a simple model and the results are easy to interpret. The model had an accuracy of 89.92% in the train data and 89.58% in the test data.
 
 ### Features
-* Distance from goal
-* Angle from goal
-* Angle squared
-* Distance times angle
-* Body part
-* Shot type
-* Previous event
-* Shot result
 
-## Data
-### Train Data
-To train the model, i used all shots and freekick shots in the Italian, French and German League on the 17/18 season.
-This train data resulted in 25266 total shots.
-### Test Data
-To test the model, i used all shots and freekick shots in the English and Spanish League on the 17/18 season.
-This test data resulted in 17233 total shots. Aditionaly, i added the penalty shots with the fixed xg value mentioned before.
-## Files
-* loader.py: loads the event data from the local directory and transforms to the SPADL format
-* features.py: calculate and get the features of the shots
-* training.py: trains the model
-* predictions.py: predicts the xg of the shots
-* main.py: main file to run the model
-* wyDataLoader.py: loads the additional data such Players and Teams info and minutes played per player per game
+- Distance from goal
+- Angle from goal
+- Angle squared
+- Distance times angle
+- Body part
+- Shot type
+- Previous event
+- Shot result
+
+### Data
+
+#### Train Data
+
+To train the model, all shots and freekick shots in the Italian, French and German League on the 17/18 season were used. This train data resulted in 25266 total shots.
+
+#### Test Data
+
+To test the model, all shots and freekick shots in the English and Spanish League on the 17/18 season were used. This test data resulted in 17233 total shots. Additionally, penalty shots with the fixed xg value mentioned before were added.
+
+### Files
+
+- loader.py: loads the event data from the local directory and transforms to the SPADL format
+- features.py: calculates and gets the features of the shots
+- training.py: trains the model
+- predictions.py: predicts the xg of the shots
+- main.py: main file to run the model
+- wyDataLoader.py: loads the additional data such as Players and Teams info and minutes played per player per game
+
 
 ## Results
 ### Train Data
